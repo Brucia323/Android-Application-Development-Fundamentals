@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">My Application</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="福州">福州</string>
+    <string name="热点">热点</string>
+    <string name="推荐">推荐</string>
+    <string name="社会">社会</string>
+</resources>

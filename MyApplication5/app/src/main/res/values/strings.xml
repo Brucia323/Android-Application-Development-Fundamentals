@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">My Application</string>
+    <string name="购物车">购物车</string>
+    <string name="定位">定位</string>
+    <string name="主页">主页</string>
+    <string name="通讯录">通讯录</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>
