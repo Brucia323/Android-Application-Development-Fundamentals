@@ -2,6 +2,10 @@ import Constants from 'expo-constants'
 import { StyleSheet, View, ScrollView } from 'react-native'
 import { Link } from 'react-router-native'
 import Text from './Text'
+import useAuthStorage from '../hooks/useAuthStorage'
+import { useApolloClient, useQuery } from '@apollo/client'
+import { ME } from '../graphql/queries'
+import { useEffect, useState } from 'react'
 
 const styles = StyleSheet.create({
   container: {
@@ -19,6 +23,22 @@ const styles = StyleSheet.create({
 })
 
 const AppBar = () => {
+  const { data } = useQuery(ME)
+  const authStorage = useAuthStorage()
+  const apolloClient = useApolloClient()
+  const [me, setMe] = useState(null)
+
+  const handleSignOut = () => {
+    authStorage.removeAccessToken()
+    apolloClient.resetStore()
+  }
+
+  useEffect(() => {
+    if (data) {
+      setMe(data.me)
+    }
+  },[data])
+
   return (
     <View style={styles.container}>
       <ScrollView horizontal>
@@ -29,7 +49,13 @@ const AppBar = () => {
         </View>
         <View style={styles.Button}>
           <Link to='/signin'>
-            <Text fontWeight='bold'>登录</Text>
+            {me ? (
+              <Text fontWeight='bold' onPress={handleSignOut}>
+                注销
+              </Text>
+            ) : (
+              <Text fontWeight='bold'>登录</Text>
+            )}
           </Link>
         </View>
       </ScrollView>
