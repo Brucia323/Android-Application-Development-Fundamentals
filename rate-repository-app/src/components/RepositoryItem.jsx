@@ -21,7 +21,7 @@ const RepositoryItem = ({ item }) => {
           style={{ height: 46, width: 46, borderRadius: 5 }}
         />
         <View
-          style={{ flexDirection: 'column', paddingLeft: 12, paddingRight: 12 }}
+          style={{ flexDirection: 'column', paddingLeft: 12, paddingRight: 24 }}
         >
           <Text fontWeight='bold'>{item.fullName}</Text>
           <Text>{item.description}</Text>
