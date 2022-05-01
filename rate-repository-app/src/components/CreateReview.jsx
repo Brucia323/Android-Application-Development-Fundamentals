@@ -2,7 +2,7 @@ import { Formik } from 'formik'
 import { Pressable, StyleSheet, View } from 'react-native'
 import { useNavigate } from 'react-router-native'
 import * as yup from 'yup'
-import useSignIn from '../hooks/useSignIn'
+import useCreateReview from '../hooks/useCreateReview'
 import theme from '../theme'
 import FormikTextInput from './FormikTextInput'
 import Text from './Text'
@@ -27,20 +27,32 @@ const styles = StyleSheet.create({
 })
 
 const validationSchema = yup.object().shape({
-  username: yup.string().required('请输入用户名'),
-  password: yup.string().required('请输入密码'),
+  repositoryOwnerName: yup.string().required('请输入存储库所有者'),
+  repositoryName: yup.string().required('请输入存储库名称'),
+  rating: yup
+    .number()
+    .required('请输入评分')
+    .min(0, '不得小于0')
+    .max(100, '不得大于100')
+    .integer(),
+  review: yup.string(),
 })
 
-const SignIn = () => {
-  const [signIn] = useSignIn()
+const CreateReview = () => {
+  const [createReview] = useCreateReview()
   const navigate = useNavigate()
 
   const onSubmit = async values => {
-    const { username, password } = values
+    const { repositoryName, repositoryOwnerName, rating, review } = values
 
     try {
-      await signIn({ username, password })
-      navigate('/', { replace: true })
+      const { data } = await createReview({
+        repositoryName,
+        ownerName: repositoryOwnerName,
+        rating,
+        text: review,
+      })
+      navigate(`/${data.createReview.id}`, { replace: true })
     } catch (e) {
       console.log(e)
     }
@@ -54,11 +66,16 @@ const SignIn = () => {
     >
       {({ handleSubmit }) => (
         <View style={styles.container}>
-          <FormikTextInput name='username' placeholder='用户名' />
-          <FormikTextInput name='password' placeholder='密码' secureTextEntry />
+          <FormikTextInput
+            name='repositoryOwnerName'
+            placeholder='存储库所有者'
+          />
+          <FormikTextInput name='repositoryName' placeholder='存储库名称' />
+          <FormikTextInput name='rating' placeholder='评分从0到100' />
+          <FormikTextInput name='review' placeholder='评论' multiline />
           <Pressable onPress={handleSubmit} style={styles.Button}>
             <Text style={styles.Text} fontSize='subheading'>
-              登录
+              创建评论
             </Text>
           </Pressable>
         </View>
@@ -67,4 +84,4 @@ const SignIn = () => {
   )
 }
 
-export default SignIn
+export default CreateReview

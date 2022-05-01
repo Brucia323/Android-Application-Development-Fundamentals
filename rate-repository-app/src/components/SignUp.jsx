@@ -2,7 +2,7 @@ import { Formik } from 'formik'
 import { Pressable, StyleSheet, View } from 'react-native'
 import { useNavigate } from 'react-router-native'
 import * as yup from 'yup'
-import useSignIn from '../hooks/useSignIn'
+import useSignUp from '../hooks/useSignup'
 import theme from '../theme'
 import FormikTextInput from './FormikTextInput'
 import Text from './Text'
@@ -29,17 +29,21 @@ const styles = StyleSheet.create({
 const validationSchema = yup.object().shape({
   username: yup.string().required('请输入用户名'),
   password: yup.string().required('请输入密码'),
+  passwordConfirmation: yup
+    .string()
+    .required('请确认密码')
+    .oneOf([yup.ref('password'), null], '两次输入的密码不一致'),
 })
 
-const SignIn = () => {
-  const [signIn] = useSignIn()
+const SignUp = () => {
+  const [signUp] = useSignUp()
   const navigate = useNavigate()
 
   const onSubmit = async values => {
     const { username, password } = values
 
     try {
-      await signIn({ username, password })
+      await signUp({ username, password })
       navigate('/', { replace: true })
     } catch (e) {
       console.log(e)
@@ -56,9 +60,14 @@ const SignIn = () => {
         <View style={styles.container}>
           <FormikTextInput name='username' placeholder='用户名' />
           <FormikTextInput name='password' placeholder='密码' secureTextEntry />
+          <FormikTextInput
+            name='passwordConfirmation'
+            placeholder='确认密码'
+            secureTextEntry
+          />
           <Pressable onPress={handleSubmit} style={styles.Button}>
             <Text style={styles.Text} fontSize='subheading'>
-              登录
+              注册
             </Text>
           </Pressable>
         </View>
@@ -67,4 +76,4 @@ const SignIn = () => {
   )
 }
 
-export default SignIn
+export default SignUp
