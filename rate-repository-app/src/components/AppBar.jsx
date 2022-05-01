@@ -1,24 +1,25 @@
-import Constants from 'expo-constants'
-import { StyleSheet, View, ScrollView } from 'react-native'
-import { Link } from 'react-router-native'
-import Text from './Text'
-import useAuthStorage from '../hooks/useAuthStorage'
 import { useApolloClient, useQuery } from '@apollo/client'
-import { ME } from '../graphql/queries'
+import Constants from 'expo-constants'
 import { useEffect, useState } from 'react'
+import { Pressable, ScrollView, StyleSheet, View } from 'react-native'
+import { useNavigate } from 'react-router-native'
+import { ME } from '../graphql/queries'
+import useAuthStorage from '../hooks/useAuthStorage'
+import Text from './Text'
 
 const styles = StyleSheet.create({
   container: {
-    paddingTop: Constants.statusBarHeight + 12,
-    height: 64,
-    backgroundColor: '#d9d9d9',
+    paddingTop: Constants.statusBarHeight,
+    height: 72,
+    backgroundColor: '#ffffff',
     paddingLeft: 12,
-    paddingBottom: 12,
     flexDirection: 'row',
   },
   Button: {
     marginLeft: 8,
     marginRight: 8,
+    marginBottom: 12,
+    marginTop: 12,
   },
 })
 
@@ -27,37 +28,55 @@ const AppBar = () => {
   const authStorage = useAuthStorage()
   const apolloClient = useApolloClient()
   const [me, setMe] = useState(null)
+  const navigate = useNavigate()
 
-  const handleSignOut = () => {
-    authStorage.removeAccessToken()
-    apolloClient.resetStore()
+  const handleSignIn = () => {
+    if (me) {
+      authStorage.removeAccessToken()
+      apolloClient.resetStore()
+    }
+    navigate('/signin', { replace: true })
   }
 
   useEffect(() => {
     if (data) {
       setMe(data.me)
     }
-  },[data])
+  }, [data])
 
   return (
     <View style={styles.container}>
       <ScrollView horizontal>
-        <View style={styles.Button}>
-          <Link to='/'>
+        <Pressable onPress={() => navigate('/', { replace: true })}>
+          <View style={styles.Button}>
             <Text fontWeight='bold'>存储库</Text>
-          </Link>
-        </View>
-        <View style={styles.Button}>
-          <Link to='/signin'>
+          </View>
+        </Pressable>
+        {me && (
+          <Pressable
+            onPress={() => navigate('/createreview', { replace: true })}
+          >
+            <View style={styles.Button}>
+              <Text fontWeight='bold'>创建评论</Text>
+            </View>
+          </Pressable>
+        )}
+        <Pressable onPress={handleSignIn}>
+          <View style={styles.Button}>
             {me ? (
-              <Text fontWeight='bold' onPress={handleSignOut}>
-                注销
-              </Text>
+              <Text fontWeight='bold'>注销</Text>
             ) : (
               <Text fontWeight='bold'>登录</Text>
             )}
-          </Link>
-        </View>
+          </View>
+        </Pressable>
+        {!me &&
+          <Pressable onPress={() => navigate('/signup', { replace: true })}>
+            <View style={styles.Button}>
+              <Text fontWeight='bold'>注册</Text>
+            </View>
+          </Pressable>
+        }
       </ScrollView>
     </View>
   )
