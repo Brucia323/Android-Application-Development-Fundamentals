@@ -25,7 +25,7 @@ const RepositoryList = () => {
   const [order, setOrder] = useState('最新')
   const [searchQuery, setSearchQuery] = useState('')
   const [searchKeyword] = useDebounce(searchQuery, 1000)
-  const { repositories, loading, refetch } = useRepositories(
+  const { repositories, refetch, fetchMore } = useRepositories(
     order,
     searchKeyword
   )
@@ -33,10 +33,6 @@ const RepositoryList = () => {
   const [visible, setVisible] = useState(false)
 
   useEffect(() => refetch(order, searchKeyword), [searchKeyword])
-
-  if (loading) {
-    return <Text>loading...</Text>
-  }
 
   // Get the nodes from the edges array
   const repositoryNodes = repositories
@@ -48,6 +44,8 @@ const RepositoryList = () => {
   const closeModal = () => setVisible(false)
 
   const onChangeSearch = query => setSearchQuery(query)
+
+  const onEndReached = () => fetchMore()
 
   return (
     <>
@@ -88,6 +86,8 @@ const RepositoryList = () => {
       <FlatList
         data={repositoryNodes}
         ItemSeparatorComponent={ItemSeparator}
+        onEndReachedThreshold={0.5}
+        onEndReached={onEndReached}
         renderItem={({ item }) => (
           <Pressable
             onPress={() => {

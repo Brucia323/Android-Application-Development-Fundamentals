@@ -46,13 +46,13 @@ const CreateReview = () => {
     const { repositoryName, repositoryOwnerName, rating, review } = values
 
     try {
-      const { data } = await createReview({
+      await createReview({
         repositoryName,
         ownerName: repositoryOwnerName,
         rating,
         text: review,
       })
-      navigate(`/${data.createReview.id}`, { replace: true })
+      navigate('/', { replace: true })
     } catch (e) {
       console.log(e)
     }
