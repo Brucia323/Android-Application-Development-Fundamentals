@@ -1,5 +1,5 @@
 import { Formik } from 'formik'
-import { Pressable, StyleSheet, View } from 'react-native'
+import { Pressable, StyleSheet, ToastAndroid, View } from 'react-native'
 import { useNavigate } from 'react-router-native'
 import * as yup from 'yup'
 import useCreateReview from '../hooks/useCreateReview'
@@ -54,6 +54,7 @@ const CreateReview = () => {
       })
       navigate('/', { replace: true })
     } catch (e) {
+      ToastAndroid.show('评分失败', ToastAndroid.LONG)
       console.log(e)
     }
   }

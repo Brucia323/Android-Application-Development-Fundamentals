@@ -1,5 +1,5 @@
 import { Formik } from 'formik'
-import { Pressable, StyleSheet, View } from 'react-native'
+import { Pressable, StyleSheet, ToastAndroid, View } from 'react-native'
 import { useNavigate } from 'react-router-native'
 import * as yup from 'yup'
 import useSignUp from '../hooks/useSignup'
@@ -27,8 +27,18 @@ const styles = StyleSheet.create({
 })
 
 const validationSchema = yup.object().shape({
-  username: yup.string().required('请输入用户名'),
-  password: yup.string().required('请输入密码'),
+  username: yup
+    .string()
+    .required('请输入用户名')
+    .min(1, '不得少于1个字符')
+    .max(30, '不得超过30个字符')
+    .trim(),
+  password: yup
+    .string()
+    .required('请输入密码')
+    .min(5, '不得少于5个字符')
+    .max(50, '不得超过50个字符')
+    .trim(),
   passwordConfirmation: yup
     .string()
     .required('请确认密码')
@@ -46,6 +56,7 @@ const SignUp = () => {
       await signUp({ username, password })
       navigate('/', { replace: true })
     } catch (e) {
+      ToastAndroid.show('注册失败', ToastAndroid.LONG)
       console.log(e)
     }
   }
