@@ -1,0 +1,36 @@
+[submodule "rate-repository-api"]
+	path = rate-repository-api
+	url = https://github.com/ZZZCNY/rate-repository-api.git
+[submodule "Data-sharing-between-database-applications-and-applications"]
+	path = Data-sharing-between-database-applications-and-applications
+	url = https://github.com/ZZZCNY/Data-sharing-between-database-applications-and-applications.git
+[submodule "Listener-and-interceptor-design-of-Activity-s-application-practice-2"]
+	path = Listener-and-interceptor-design-of-Activity-s-application-practice-2
+	url = https://github.com/ZZZCNY/Listener-and-interceptor-design-of-Activity-s-application-practice-2.git
+[submodule "Listener-and-interceptor-design-of-Activity-s-application-practice-1"]
+	path = Listener-and-interceptor-design-of-Activity-s-application-practice-1
+	url = https://github.com/ZZZCNY/Listener-and-interceptor-design-of-Activity-s-application-practice-1.git
+[submodule "Listener-and-interceptor-design-of-Activity-s-application-practice"]
+	path = Listener-and-interceptor-design-of-Activity-s-application-practice
+	url = https://github.com/ZZZCNY/Listener-and-interceptor-design-of-Activity-s-application-practice.git
+[submodule "Fragment-layout-1"]
+	path = Fragment-layout-1
+	url = https://github.com/ZZZCNY/Fragment-layout-1.git
+[submodule "Fragment-layout"]
+	path = Fragment-layout
+	url = https://github.com/ZZZCNY/Fragment-layout.git
+[submodule "Multi-threaded-communication-mechanism"]
+	path = Multi-threaded-communication-mechanism
+	url = https://github.com/ZZZCNY/Multi-threaded-communication-mechanism.git
+[submodule "Recent-weather-table"]
+	path = Recent-weather-table
+	url = https://github.com/ZZZCNY/Recent-weather-table.git
+[submodule "Activity-application-practice-login-registration-design"]
+	path = Activity-application-practice-login-registration-design
+	url = https://github.com/ZZZCNY/Activity-application-practice-login-registration-design.git
+[submodule "Calculator-design-of-application-practice-of-Activity"]
+	path = Calculator-design-of-application-practice-of-Activity
+	url = https://github.com/ZZZCNY/Calculator-design-of-application-practice-of-Activity.git
+[submodule "rate-repository-app"]
+	path = rate-repository-app
+	url = https://github.com/ZZZCNY/rate-repository-app.git
